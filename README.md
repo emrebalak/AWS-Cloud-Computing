@@ -1,4 +1,12 @@
-# Django and Flask web projects practising AWS Cloud Computing Services like S3 Bucket, DynamoDB, Lambda etc.
+# Web projects practising AWS Cloud Computing Services like S3 Bucket, DynamoDB, Lambda etc.
+
+There are different django and flask web projects under this repository. 
+
+In first project I used AWS S3 Bucket to upload image.
+
+In second project I improved first project and integrated with dynamoDB. Metadata information of the uploaded object is written to Dynamo DB.
+
+In third project, in addition to S3 and Dynamo DB software that I have developed in the previous projects, I created a simple interface. In this interface an API Gateway is triggered so that CRUD operations achieved using Lambda. 
 
 
 ## aws-s3bucket-django-app
