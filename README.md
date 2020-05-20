@@ -3,7 +3,7 @@
 
 ## aws-s3bucket-django-app
 
-### This is a Django app that uploads image given by the user to Amazon S3 bucket
+### Django app that uploads image given by the user to Amazon S3 bucket
 
 Before running the project you should create an AWS account then create an AWS S3 bucket in the console.
 
@@ -26,4 +26,8 @@ python manage.py runserver
 
 ### This is a Flask web application integrated with Amazon S3 Bucket and DynamoDB.
 
-After installing requirement.txt you can use "flask run" command to run the app.
+To run the application;
+
+- Install requirement.txt
+- Define crediantials in config.py 
+- Type "flask run" command
