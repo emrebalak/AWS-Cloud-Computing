@@ -1,0 +1,94 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="en"{% endblock %}
+{% block head %}
+  {{super()}}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/styles.css">
+{% endblock %}
+{% block title %}S3 Object List{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12-xs">
+                <h2>Upload File to Amamazon S3 Bucket and It's Metadata to DynamoDB</h2>
+                <h3>Bucket Info</h3>
+                <p>Bucket Name: {{ my_bucket.name }} </p>
+                <p>Created: {{ my_bucket.creation_date | datetimeformat }} </p>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <p class="bg-info" style="padding: 15px;">
+                        {% for message in messages %}
+                            {{ messages }}<br>
+                        {% endfor %}
+                         </p>
+                    {% endif %}
+                {% endwith %}
+                <hr>
+
+                <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                    <p>Give a table name you want to put file's metadata in DynamoDB. <br> (If table name exists, metadata will be inserted into existing table otherwise given table will be created.)</p>
+                    <p><input type="text" name="table" required></p>
+                    <p><input type="file" name="file" required></p>
+                    <button type="submit" name="submit" class="bin bin-primary">Upload</button>
+                </form>
+
+                <h3>Existing Tables</h3>
+
+                <table class="table table-stripped">
+                    <tr>
+                        <th>TableName</th>
+                    </tr>
+                    {% for item in db %}
+                    <tr>
+                        <td>{{item.name}}</td> 
+                    </tr>
+                    {% endfor %}
+                    {% if db |length ==0 %}
+                      <p>There are no tables in the database yet!</p>
+                    {% endif %} 
+                </table>                  
+                
+                <h3>Uploaded Files</h3>
+                  
+                <table class="table table-stripped">
+                    <tr>
+                        <th>Filename</th>
+                        <th>Last Modified</th>
+                        <th>Type</th>
+                    </tr>
+                    {% for f in files %}
+                    <tr>
+                        <td>{{ f.key }}</td> 
+                        <td>{{ f.last_modified | datetimeformat }} </td>
+                        <td>{{ f.key | file_type }} </td>
+                        <td class = "td-buttons">
+                            <form class="delete-form" action="{{ url_for('delete') }}" method="POST">
+                              <input type="hidden" name="key" value="{{ f.key }}">
+                              <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash-alt"></i>
+                              </button>
+                            </form>
+                            <form class="download-form" action="{{ url_for('download') }}" method="POST">
+                                <input type="hidden" name="key" value="{{ f.key }}">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                  <i class="fa fa-download"></i>
+                                </button>
+                              </form>
+                          </td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
