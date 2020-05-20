@@ -1,8 +1,8 @@
-### Django and Flask web projects practising AWS Cloud Computing Services like S3 Bucket, DynamoDB, Lambda etc.
+# Django and Flask web projects practising AWS Cloud Computing Services like S3 Bucket, DynamoDB, Lambda etc.
 
 ## aws-s3bucket-django-app
 
-# Django app that uploads image given by the user to Amazon S3 bucket
+### Django app that uploads image given by the user to Amazon S3 bucket
 
 Before running the project you should create an AWS account then create an AWS S3 bucket in the console.
 
